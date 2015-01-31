@@ -12,6 +12,7 @@ public class MainActivity extends Activity {
 
 	 Button btnCamera;
 	 Button btnUpload;
+	 Button btnMake;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,9 +21,11 @@ public class MainActivity extends Activity {
         
         btnCamera = (Button) findViewById(R.id.camera);
         btnUpload = (Button) findViewById(R.id.upload);
+        btnMake = (Button) findViewById(R.id.make_filter);
         
         btnCamera.setOnClickListener(open_camera);
         btnUpload.setOnClickListener(upload_photos);
+        btnMake.setOnClickListener(make_filter);
     
     }
     
@@ -42,8 +45,19 @@ public class MainActivity extends Activity {
          	Intent i=new Intent(
                      MainActivity.this,
                      Upload.class);
-              startActivity(i);
+         	i.putExtra("isFilterPhoto", false);
+            startActivity(i);
          }
+      };
+      
+    OnClickListener make_filter = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+          	Intent i=new Intent(
+                      MainActivity.this,
+                      Make.class);
+               startActivity(i);
+        }
       };
 
 
