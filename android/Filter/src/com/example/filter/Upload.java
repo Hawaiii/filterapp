@@ -24,6 +24,7 @@ public class Upload extends Activity {
 	Button btnUpload;
 	ImageView imgFavorite;
 	Bitmap bitmap;
+	boolean isFilterPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,8 @@ public class Upload extends Activity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         imgFavorite = (ImageView)findViewById(R.id.imageView1);
 
+        //TODO: deal with 1) upload filter photo 2) upload todo photo
+        isFilterPhoto = getIntent().getExtras().getBoolean("isFilterPhoto");
     }
 
     @Override
