@@ -24,8 +24,6 @@ public class ImgProcessor {
 	}
 	public void loadFilter(Bitmap goodImg){
 		//TODO
-		//load to forProcessing
-		return null;
 	}
 	public Bitmap applyFilter(Bitmap toFilter, Filter filter){
 		//TODO
