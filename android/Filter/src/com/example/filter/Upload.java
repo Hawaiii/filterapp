@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -18,6 +20,8 @@ public class Upload extends Activity {
 	private static final int PICK_IMAGE = 1;
 	Button btnCamera;
 	Button btnUpload;
+	Button btnYes;
+	Button btnNo;
 	ImageView imgFavorite;
 	Bitmap bitmap;
 	boolean isFilterPhoto;
@@ -26,6 +30,9 @@ public class Upload extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        
+        btnYes = (Button) findViewById(R.id.yes);
+        btnNo = (Button) findViewById(R.id.no);
         //open the gallery
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -35,7 +42,47 @@ public class Upload extends Activity {
 
         //TODO: deal with 1) upload filter photo 2) upload todo photo
         isFilterPhoto = getIntent().getExtras().getBoolean("isFilterPhoto");
+        
+        if (isFilterPhoto) {
+        	btnYes.setOnClickListener(filter_complete); //go to filter-result page
+        	btnNo.setOnClickListener(make_filter); //go back to make-filter page            
+        } else {
+        	//yes: go to choose-filter page
+        	//no: go to main activity page
+        }
+        
+        
     }
+    
+    
+    OnClickListener make_filter = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        	Intent i=new Intent(
+                    Upload.this,
+                    Make.class);
+             startActivity(i);
+        }
+      };
+      
+    OnClickListener filter_complete = new OnClickListener() {
+    	
+    	//TODO add all the filter making code !!!!
+        @Override
+        public void onClick(View v) {
+        	Intent i=new Intent(
+                    Upload.this,
+                    Filter_Complete.class);
+        	if (bitmap != null) {
+        		i.putExtra("completed_filter", bitmap);
+        	} else {
+        		//TODO exception
+        	}
+             startActivity(i);
+        }
+      };
+     
+    
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -45,7 +92,7 @@ public class Upload extends Activity {
                 Uri selectedImageUri = data.getData();
                 String filePath = null;
                 
-                Bitmap bitmap;
+                
 				try {
 					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					imgFavorite.setImageBitmap(bitmap);
