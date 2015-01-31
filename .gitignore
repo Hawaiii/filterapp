@@ -1,3 +1,3 @@
-/android/Filter/bin/*
-/android/Filter/.classpath
-/.metadata/*
+android/Filter/bin/.*
+android/Filter/.classpath
+.metadata/.*
