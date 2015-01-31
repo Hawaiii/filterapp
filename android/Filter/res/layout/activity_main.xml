@@ -12,25 +12,47 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="PeeL"
+        android:textSize="30dp" />
+
+   
+
+    <Button
+        android:id="@+id/make_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="28dp"
+        android:height="10dp"
+        android:text="Make a filter"
+        android:width="10dp" />
 
     <Button
         android:id="@+id/camera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginLeft="29dp"
-        android:layout_marginTop="61dp"
-        android:text="Take a Picture" />
+        android:layout_alignBaseline="@+id/make_filter"
+        android:layout_alignBottom="@+id/make_filter"
+        android:layout_centerHorizontal="true"
+        android:height="10dp"
+        android:text="Take a Picture"
+        android:width="10dp" />
 
     <Button
         android:id="@+id/upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/camera"
-        android:layout_below="@+id/camera"
-        android:layout_marginTop="36dp"
-        android:text="Upload a Picture" />
-
+        android:layout_alignBaseline="@+id/camera"
+        android:layout_alignBottom="@+id/camera"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="23dp"
+        android:height="10dp"
+        android:text="Upload a Picture"
+        android:width="10dp" />
 </RelativeLayout>
