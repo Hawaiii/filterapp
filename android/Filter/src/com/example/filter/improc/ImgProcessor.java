@@ -10,11 +10,11 @@ import android.graphics.Bitmap;
  *
  */
 public class ImgProcessor {
-	private HashMap<Bitmap, Filter> savedFilters;
+	private HashMap<String, Filter> savedFilters;
 	private Filter forProcessing; //load好的filter就是读到这里
 	
 	public ImgProcessor(){
-		savedFilters = new HashMap<Bitmap, Filter>();
+		savedFilters = new HashMap<String, Filter>();
 	}
 
 	public Filter makefilter(Bitmap img){
