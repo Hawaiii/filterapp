@@ -160,17 +160,9 @@ public class Upload_b extends Activity {
 //        	
         File dir = new File(Environment.getExternalStorageDirectory()+ "/Pictures/peel");
         File[] filelist = dir.listFiles();
+        
         for (File pic : filelist) {
-//        	BitmapFactory.Options options = new BitmapFactory.Options();
-//        	options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//        	try {
-//				bitmap = BitmapFactory.decodeStream(new FileInputStream(pic), null, options);
-//			} catch (FileNotFoundException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-        	testArray.add(pic.getAbsolutePath());
-        	
+        	testArray.add(pic.getAbsolutePath());       	
         }
         	
         ArrayList<OnClickListener> listeners = new ArrayList<OnClickListener>();

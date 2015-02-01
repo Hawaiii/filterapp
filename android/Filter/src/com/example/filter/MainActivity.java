@@ -1,5 +1,6 @@
 package com.example.filter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ public class MainActivity extends Activity {
 	 ImageButton btnMake;
 //	 Button btnCarousel;
 
-    @Override
+    @SuppressLint("NewApi") @Override
     protected void onCreate(Bundle savedInstanceState) {
+//    	getActionBar().hide();
 //    	Log.d("d","0");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
