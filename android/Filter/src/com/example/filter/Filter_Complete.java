@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 
 /**
  * after making a filter, upload pictures to try
@@ -17,8 +16,8 @@ import android.widget.ImageView;
  */
 public class Filter_Complete extends Activity {
 
-	 Button btnUpload;
-	 Button btnCamera;
+	 ImageButton btnUpload;
+	 ImageButton btnCamera;
 	 Bitmap filter_complete;
 
     @Override
@@ -26,8 +25,8 @@ public class Filter_Complete extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete);
 //        filter_complete = getIntent().getExtra()
-        btnUpload = (Button) findViewById(R.id.upload);
-        btnCamera = (Button) findViewById(R.id.camera);
+        btnUpload = (ImageButton) findViewById(R.id.upload);
+        btnCamera = (ImageButton) findViewById(R.id.camera);
         btnUpload.setOnClickListener(upload_photos);
         btnCamera.setOnClickListener(camera);
        

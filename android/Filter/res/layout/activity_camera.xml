@@ -16,7 +16,10 @@
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
-       android:text="Nope" />
+       android:text="Nope" 
+       android:background = "@color/red"
+       android:padding="10dp"
+       android:textColor="@color/white"/>
 
    <ImageView
        android:id="@+id/imageView1"
@@ -34,6 +37,9 @@
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
+       android:background = "@color/red"
+       android:padding="10dp"
+       android:textColor="@color/white"
        android:text="save to gallery" />
    
    <!-- 

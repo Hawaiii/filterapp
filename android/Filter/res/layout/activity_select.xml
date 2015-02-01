@@ -39,15 +39,6 @@
         android:layout_alignParentRight="true"
         android:text="yes" /> -->
 
-    <ImageButton
-        android:id="@+id/yes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@color/legit_gray"
-        android:src="@drawable/check_btn" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
@@ -62,9 +53,19 @@
         android:id="@+id/no"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/no"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/textView1"
         android:background="@color/legit_gray"
         android:src="@drawable/cross_btn" />
+
+    <ImageButton
+        android:id="@+id/yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="14dp"
+        android:background="@color/legit_gray"
+        android:src="@drawable/check_btn" />
 
 </RelativeLayout>

@@ -34,7 +34,10 @@
         android:layout_below="@+id/textView1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="22dp"
-        android:text="Try another one" />
+        android:text="Try another picture" 
+        android:background = "@color/red"
+       android:padding="10dp"
+       android:textColor="@color/white"/>
 
     <ImageView
         android:id="@+id/imageView1"

@@ -17,6 +17,7 @@ public final class R {
         public static final int light_green=0x7f040003;
         public static final int light_grey=0x7f040001;
         public static final int pinky_pink=0x7f040005;
+        public static final int red=0x7f040007;
         public static final int white=0x7f040004;
     }
     public static final class dimen {
@@ -53,15 +54,16 @@ public final class R {
         public static final int up_btn=0x7f020014;
     }
     public static final class id {
-        public static final int action_settings=0x7f090009;
-        public static final int camera=0x7f090003;
-        public static final int carousel=0x7f090008;
-        public static final int home=0x7f090007;
+        public static final int action_settings=0x7f09000a;
+        public static final int camera=0x7f090005;
+        public static final int carousel=0x7f090009;
+        public static final int home=0x7f090008;
         public static final int imageView1=0x7f090001;
-        public static final int make_filter=0x7f090006;
+        public static final int make_filter=0x7f090007;
         public static final int no=0x7f090000;
-        public static final int textView1=0x7f090004;
-        public static final int upload=0x7f090005;
+        public static final int textView1=0x7f090003;
+        public static final int textView2=0x7f090004;
+        public static final int upload=0x7f090006;
         public static final int yes=0x7f090002;
     }
     public static final class layout {
