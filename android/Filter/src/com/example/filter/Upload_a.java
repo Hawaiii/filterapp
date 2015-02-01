@@ -28,6 +28,11 @@ import android.widget.ImageView;
 import com.example.filter.improc.Filter;
 import com.example.filter.improc.ImgProcessor;
 
+/**
+ * Upload the picture to make the filter.
+ * @author zhifanli
+ *
+ */
 public class Upload_a extends Activity {
 
 	private static final int PICK_IMAGE = 1;

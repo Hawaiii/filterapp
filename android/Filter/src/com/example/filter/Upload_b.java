@@ -3,10 +3,12 @@ package com.example.filter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.example.filter.improc.Filter;
 import com.example.filter.improc.ImgProcessor;
@@ -15,6 +17,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +31,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+/**
+ * Upload the picture to use the filter.
+ * @author zhifanli
+ *
+ */
 public class Upload_b extends Activity {
 
 	private static final int PICK_IMAGE = 1;
@@ -38,6 +46,7 @@ public class Upload_b extends Activity {
 	ImageView imgFavorite;
 	Bitmap bitmap;
 	boolean isFilterPhoto;
+	Bitmap finalimg;
 	/**
      * Define the number of items visible when the carousel is first shown.
      */
@@ -54,8 +63,11 @@ public class Upload_b extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         
-//        btnYes = (Button) findViewById(R.id.yes);
-//        btnNo = (Button) findViewById(R.id.no);
+        btnYes = (Button) findViewById(R.id.yes);
+        btnNo = (Button) findViewById(R.id.no);
+        btnYes.setOnClickListener(save);
+        btnNo.setOnClickListener(back);
+        
         //open the gallery
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -68,6 +80,28 @@ public class Upload_b extends Activity {
         
         
     }
+    
+    OnClickListener save = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+        	String thepath = saveImage(finalimg);
+        	Intent i=new Intent(
+                    Upload_b.this,
+                    Save.class);
+             startActivity(i);
+        }
+      };
+      
+    OnClickListener back = new OnClickListener() {
+    	
+    	  @Override
+          public void onClick(View v) {
+          	Intent i=new Intent(
+                      Upload_b.this,
+                      Filter_Complete.class);
+               startActivity(i);
+          }
+      };
     
     
     
@@ -155,6 +189,7 @@ public class Upload_b extends Activity {
                     Bitmap bitmap = BitmapFactory.decodeFile(path, options);
           			Bitmap filtered = ImgProcessor.applyFilter(bitmap, f);
           			imgFavorite.setImageBitmap(filtered);
+          			finalimg = filtered;
           		}
           	};
           	
@@ -190,6 +225,50 @@ public class Upload_b extends Activity {
         }
     }
 
+    private String saveImage(Bitmap finalBitmap) {
+	    String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+	    System.out.println(root +" Root value in saveImage Function");
+	    File myDir = new File(root + "/peel");
+
+	    if (!myDir.exists()) {
+	    	myDir.mkdirs();
+        }
+
+	    Random generator = new Random();
+	    int n = 10000;
+	    n = generator.nextInt(n);
+	    String iname = "Image-" + n + ".jpg";
+	    
+	    File file = new File(myDir, iname);
+	    if (file.exists())
+	        file.delete();
+	    try {
+	        FileOutputStream out = new FileOutputStream(file);
+	        finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+	        out.flush();
+	        out.close();
+	    }
+	    catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    // Tell the media scanner about the new file so that it is
+	    // immediately available to the user.
+	    MediaScannerConnection.scanFile(this, new String[] { file.toString() }, null,
+	            new MediaScannerConnection.OnScanCompletedListener() {
+	                public void onScanCompleted(String path, Uri uri) {
+	                    Log.i("ExternalStorage", "Scanned " + path + ":");
+	                    Log.i("ExternalStorage", "-> uri=" + uri);
+	                }
+	    });
+
+	    String Image_path = Environment.getExternalStorageDirectory()+ "/Pictures/peelresults/"+iname;
+	    Log.v("v",Image_path);
+//	    File[] files = myDir.listFiles();
+//    	int numberOfImages = files.length;
+//    	System.out.println("Total images in Folder "+numberOfImages);
+	    return Image_path;
+	}
     
     public Object loadSerializedObject(File f)
     {

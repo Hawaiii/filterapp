@@ -33,10 +33,11 @@ public final class R {
         public static final int shadow=0x7f020009;
     }
     public static final class id {
-        public static final int action_settings=0x7f080009;
+        public static final int action_settings=0x7f08000a;
         public static final int camera=0x7f080003;
-        public static final int carousel=0x7f080008;
+        public static final int carousel=0x7f080009;
         public static final int carousel_btn=0x7f080007;
+        public static final int home=0x7f080008;
         public static final int imageView1=0x7f080001;
         public static final int make_filter=0x7f080006;
         public static final int no=0x7f080000;
@@ -49,7 +50,8 @@ public final class R {
         public static final int activity_complete=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_make=0x7f030003;
-        public static final int activity_select=0x7f030004;
+        public static final int activity_save=0x7f030004;
+        public static final int activity_select=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f070000;

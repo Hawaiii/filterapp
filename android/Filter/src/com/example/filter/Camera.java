@@ -8,6 +8,11 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * Take a photo to use the filter
+ * @author zhifanli
+ *
+ */
 public class Camera extends Activity {
 
 	 Button btnCamera;

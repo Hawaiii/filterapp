@@ -10,6 +10,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
+/**
+ * after making a filter, upload pictures to try
+ * @author zhifanli
+ *
+ */
 public class Filter_Complete extends Activity {
 
 	 Button btnUpload;

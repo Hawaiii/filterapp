@@ -1,37 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textColor="#505050"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!-- Container view to scroll horizontally which gives the carousel effect -->
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <!-- Carousel items container - lays out items horizontally -->
+
+        <LinearLayout
+            android:id="@+id/carousel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="yes" />
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="50dp"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:scaleType="fitXY"
         android:src="@drawable/ic_launcher" />
 
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:padding="5dp"
-              android:textColor="#505050"
-              android:textStyle="bold"
-              android:textSize="12sp"
-               />
+    <Button
+        android:id="@+id/no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="no" />
 
-    <!-- Container view to scroll horizontally which gives the carousel effect -->
-
-    <HorizontalScrollView android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:scrollbars="none">
-
-        <!-- Carousel items container - lays out items horizontally -->
-        <LinearLayout android:id="@+id/carousel"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"/>
-
-    </HorizontalScrollView>
-
-</LinearLayout>
+</RelativeLayout>

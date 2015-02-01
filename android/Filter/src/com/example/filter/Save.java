@@ -2,47 +2,45 @@ package com.example.filter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 
 /**
- * 
- * Make a filter --> upload photo
+ * Finish page after saving the finished picture.
  * @author zhifanli
  *
  */
-public class Make extends Activity {
+public class Save extends Activity {
 
-	 Button btnUpload;
 
+	Button btnHome; 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make);
-        
-        btnUpload = (Button) findViewById(R.id.upload);
-        btnUpload.setOnClickListener(upload_photos);
-       
+        setContentView(R.layout.activity_save);
+        btnHome = (Button) findViewById(R.id.home);
+      
+        btnHome.setOnClickListener(home);
+    
     }
     
-    OnClickListener upload_photos = new OnClickListener() {
-   	 @Override
-        public void onClick(View v) {
-        	Intent i=new Intent(
-                    Make.this,
-                    Upload_a.class);
-        	i.putExtra("isFilterPhoto", true);
-            startActivity(i);
-        }
-     };
-
-
-     
+    OnClickListener home = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+         	Intent i=new Intent(
+                    Save.this,
+                    MainActivity.class);
+           startActivity(i);
+			
+		}
+	};
+      
     
 
     @Override
