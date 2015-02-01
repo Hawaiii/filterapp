@@ -29,7 +29,7 @@ public class Make extends Activity {
         public void onClick(View v) {
         	Intent i=new Intent(
                     Make.this,
-                    Upload.class);
+                    Upload_a.class);
         	i.putExtra("isFilterPhoto", true);
             startActivity(i);
         }

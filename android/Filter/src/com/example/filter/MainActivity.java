@@ -3,6 +3,7 @@ package com.example.filter;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,13 +18,18 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//    	Log.d("d","0");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+//        Log.d("d","0");
         btnCamera = (Button) findViewById(R.id.camera);
+//        Log.d("d","0");
         btnUpload = (Button) findViewById(R.id.upload);
+//        Log.d("d","0");
         btnMake = (Button) findViewById(R.id.make_filter);
+
         btnCarousel = (Button) findViewById(R.id.carousel_btn);
+
         
         
         btnCarousel.setOnClickListener(carousel);
@@ -60,7 +66,7 @@ public class MainActivity extends Activity {
          public void onClick(View v) {
          	Intent i=new Intent(
                      MainActivity.this,
-                     Upload.class);
+                     Upload_b.class);
          	i.putExtra("isFilterPhoto", false);
             startActivity(i);
          }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 public class Filter_Complete extends Activity {
 
 	 Button btnUpload;
+	 Button btnCamera;
 	 Bitmap filter_complete;
 
     @Override
@@ -21,7 +22,9 @@ public class Filter_Complete extends Activity {
         setContentView(R.layout.activity_complete);
 //        filter_complete = getIntent().getExtra()
         btnUpload = (Button) findViewById(R.id.upload);
+        btnCamera = (Button) findViewById(R.id.camera);
         btnUpload.setOnClickListener(upload_photos);
+        btnCamera.setOnClickListener(camera);
        
     }
     
@@ -30,11 +33,20 @@ public class Filter_Complete extends Activity {
         public void onClick(View v) {
         	Intent i=new Intent(
                     Filter_Complete.this,
-                    Upload.class);
-        	i.putExtra("isFilterPhoto", true);
+                    Upload_b.class);
             startActivity(i);
         }
      };
+     
+     OnClickListener camera = new OnClickListener() {
+       	 @Override
+            public void onClick(View v) {
+            	Intent i=new Intent(
+                        Filter_Complete.this,
+                        Camera.class);
+                startActivity(i);
+            }
+         };
 
 
      

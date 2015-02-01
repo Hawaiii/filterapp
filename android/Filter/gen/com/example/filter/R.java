@@ -260,7 +260,7 @@ containing a value of this type.
         public static final int alignBounds=0x7f040002;
         public static final int alignMargins=0x7f040003;
         public static final int bottom=0x7f040005;
-        public static final int camera=0x7f040017;
+        public static final int camera=0x7f040015;
         public static final int carousel=0x7f04001a;
         public static final int carousel_btn=0x7f040019;
         public static final int center=0x7f04000c;
@@ -275,13 +275,13 @@ containing a value of this type.
         public static final int horizontal=0x7f040000;
         public static final int imageView1=0x7f040013;
         public static final int left=0x7f040006;
-        public static final int make_filter=0x7f040016;
+        public static final int make_filter=0x7f040018;
         public static final int no=0x7f040012;
         public static final int right=0x7f040007;
         public static final int start=0x7f040010;
-        public static final int textView1=0x7f040015;
+        public static final int textView1=0x7f040016;
         public static final int top=0x7f040004;
-        public static final int upload=0x7f040018;
+        public static final int upload=0x7f040017;
         public static final int vertical=0x7f040001;
         public static final int yes=0x7f040014;
     }
