@@ -1,7 +1,6 @@
 package com.example.filter;
 
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,6 +25,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -41,8 +41,8 @@ public class Upload_b extends Activity {
 	private static final int PICK_IMAGE = 1;
 	Button btnCamera;
 	Button btnUpload;
-	Button btnYes;
-	Button btnNo;
+	ImageButton btnYes;
+	ImageButton btnNo;
 	ImageView imgFavorite;
 	Bitmap bitmap;
 	boolean isFilterPhoto;
@@ -68,8 +68,8 @@ public class Upload_b extends Activity {
         
         setContentView(R.layout.activity_select);
         
-        btnYes = (Button) findViewById(R.id.yes);
-        btnNo = (Button) findViewById(R.id.no);
+        btnYes = (ImageButton) findViewById(R.id.yes);
+        btnNo = (ImageButton) findViewById(R.id.no);
         btnYes.setOnClickListener(save);
         btnNo.setOnClickListener(back);
         
