@@ -173,11 +173,11 @@ public class Upload_b extends Activity {
           			Filter f = map.get(path);
           			BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                    Bitmap bitmap1 = BitmapFactory.decodeFile(path, options);
           			Bitmap filtered = ImgProcessor.applyFilter(bitmap, f);
           			imgFavorite.setImageBitmap(filtered);
           			finalimg = filtered;
-          			bitmap = null;
+          			bitmap1 = null;
           			System.gc();
           		}
           	};

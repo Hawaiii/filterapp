@@ -81,35 +81,35 @@ public class ImgProcessor {
      * @return
      */
     public static Bitmap applyFilter(Bitmap target, Filter filter){
-        return target;
-//      if (target == null || target.getWidth() == 0 || target.getHeight() == 0
-//              || filter == null ){
-//          Log.v("ImgProc", "Can't apply filter because image dimensions are wrong.");
-//          return null;
-//      }
-//      // Resize image if too big
-//      if (target.getWidth() > 640 || target.getHeight() > 480)
-//          target = Bitmap.createScaledBitmap(target, (int)target.getWidth()/4, (int)target.getHeight()/4, true);
-//      
-//      double[][] tgtLab = bitmap2lab(target);
-//      double[][] tgtMs = meanAndStd(tgtLab);
-//      
-//      if (tgtLab == null || tgtLab.length != 3 || tgtLab[0] == null ||
-//              tgtMs == null || tgtMs[0] == null ){
-//          Log.v("ImgProc", "tgtLab and tgtMs dimensions are wrong!");
-//      }
-//      
-//      int len = tgtLab[0].length;
-//      
-//      // Scale all pixels
-//      for (int z = 0; z < 3; z++){
-//          for (int x = 0; x < len; x++){
-//              tgtLab[z][x] = (tgtLab[z][x] - tgtMs[0][z]) * filter.std(z) / tgtMs[1][z] + filter.mean(z);
-//          }
-//      }
-//      
-//      // merge stuff back to rgba bitmap
-//      return lab2Bitmap(tgtLab, target);
+//        return target;
+      if (target == null || target.getWidth() == 0 || target.getHeight() == 0
+              || filter == null ){
+          Log.v("ImgProc", "Can't apply filter because image dimensions are wrong.");
+          return null;
+      }
+      // Resize image if too big
+      if (target.getWidth() > 640 || target.getHeight() > 480)
+          target = Bitmap.createScaledBitmap(target, (int)target.getWidth()/4, (int)target.getHeight()/4, true);
+      
+      double[][] tgtLab = bitmap2lab(target);
+      double[][] tgtMs = meanAndStd(tgtLab);
+      
+      if (tgtLab == null || tgtLab.length != 3 || tgtLab[0] == null ||
+              tgtMs == null || tgtMs[0] == null ){
+          Log.v("ImgProc", "tgtLab and tgtMs dimensions are wrong!");
+      }
+      
+      int len = tgtLab[0].length;
+      
+      // Scale all pixels
+      for (int z = 0; z < 3; z++){
+          for (int x = 0; x < len; x++){
+              tgtLab[z][x] = (tgtLab[z][x] - tgtMs[0][z]) * filter.std(z) / tgtMs[1][z] + filter.mean(z);
+          }
+      }
+      
+      // merge stuff back to rgba bitmap
+      return lab2Bitmap(tgtLab, target);
     }
     
     /**
