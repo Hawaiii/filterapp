@@ -35,18 +35,19 @@ public class ImgProcessor {
 	 * @return
 	 */
 	public static Filter makefilter(Bitmap img){
-		// Compute the mean & sigma for img l*a*b* space and make filter
-		System.out.println("Start making a filter.");
-		
+//		System.out.println("Start making a filter.");
+		// Resize image if too large
 		if (img.getWidth() > 256 || img.getHeight() > 256)
 			img = Bitmap.createScaledBitmap(img, 128, 128, true);
+		
+		// Compute the mean & sigma for img l*a*b* space and make filter
 		double[][] ms = meanAndStd(bitmap2lab(img));
 		if (ms == null){
 			System.out.println("Failed to compute mean and std!");
 			return null;
 		}
 		Filter nfilter = new Filter(ms[0], ms[1]);
-		System.out.println("Done making a filter.");
+//		System.out.println("Done making a filter.");
 	
 		return nfilter;
 	}
@@ -167,6 +168,10 @@ public class ImgProcessor {
 			return null;
 		}
 		Bitmap ntgt = tgt.copy(tgt.getConfig(), true);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 651dbef85fa944fc62c0f158b511ddc594886b36
 		int pixel, A, R, G, B;
 		
 		for (int x = 0; x < width; x++){
@@ -179,6 +184,10 @@ public class ImgProcessor {
 				ntgt.setPixel(x, y, Color.argb(A, R, G, B));
 			}
 		}
+<<<<<<< HEAD
+=======
+		tgt = null; // free target?
+>>>>>>> 651dbef85fa944fc62c0f158b511ddc594886b36
 		return ntgt;
 		
 	}
