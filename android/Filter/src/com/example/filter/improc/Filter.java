@@ -1,10 +1,12 @@
 package com.example.filter.improc;
 
+import android.graphics.Bitmap;
+
 /**
  * 
  * @author hawaii
  *
  */
 public interface Filter {
-	// maybe we'll have many version of filters. so interface. why not.
+	Bitmap applyFilter(Bitmap tgtImg);
 }
