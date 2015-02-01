@@ -35,18 +35,19 @@ public class ImgProcessor {
 	 * @return
 	 */
 	public static Filter makefilter(Bitmap img){
-		// Compute the mean & sigma for img l*a*b* space and make filter
-		System.out.println("Start making a filter.");
-		
+//		System.out.println("Start making a filter.");
+		// Resize image if too large
 		if (img.getWidth() > 256 || img.getHeight() > 256)
 			img = Bitmap.createScaledBitmap(img, 128, 128, true);
+		
+		// Compute the mean & sigma for img l*a*b* space and make filter
 		double[][] ms = meanAndStd(bitmap2lab(img));
 		if (ms == null){
 			System.out.println("Failed to compute mean and std!");
 			return null;
 		}
 		Filter nfilter = new Filter(ms[0], ms[1]);
-		System.out.println("Done making a filter.");
+//		System.out.println("Done making a filter.");
 	
 		return nfilter;
 	}
@@ -166,6 +167,7 @@ public class ImgProcessor {
 			System.out.println("rgb dimensions incorrect for coverting to bitmap.");
 			return null;
 		}
+		Bitmap ntgt = tgt.copy(tgt.getConfig(), true);
 
 		int pixel, A, R, G, B;
 		
@@ -176,10 +178,11 @@ public class ImgProcessor {
 				R = (int)rgb[0][x+width*y];
 				G = (int)rgb[1][x+width*y];
 				B = (int)rgb[2][x+width*y];
-				tgt.setPixel(x, y, Color.argb(A, R, G, B));
+				ntgt.setPixel(x, y, Color.argb(A, R, G, B));
 			}
 		}
-		return tgt;
+		tgt = null; // free target?
+		return ntgt;
 		
 	}
 	
