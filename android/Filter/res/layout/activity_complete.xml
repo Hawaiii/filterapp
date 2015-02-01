@@ -9,21 +9,10 @@
    android:paddingTop="@dimen/activity_vertical_margin"
    tools:context=".MainActivity">
 
-   
-
-   <Button
-       android:id="@+id/no"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentRight="true"
-       android:text="no" />
-
    <ImageView
        android:id="@+id/imageView1"
        android:layout_width="match_parent"
        android:layout_height="400dp"
-       android:layout_alignLeft="@+id/yes"
        android:layout_alignParentTop="true"
        android:contentDescription="@string/hello_world"
        android:scaleType="fitXY"
@@ -34,7 +23,9 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:text="yes" />
+       android:layout_centerHorizontal="true"
+       android:layout_marginBottom="5dp"
+       android:gravity="center"
+       android:text="Add to the Gallery" />
 
 </RelativeLayout>
