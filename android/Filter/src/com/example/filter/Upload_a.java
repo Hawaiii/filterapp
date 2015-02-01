@@ -101,7 +101,9 @@ public class Upload_a extends Activity {
 //            } else {
 //            	map.put("1", f);
 //            }
+            
             map.put(image_path, f);
+            Log.v("filter", f.toString());
             saveObject(map);
     		 
          	Intent i=new Intent(

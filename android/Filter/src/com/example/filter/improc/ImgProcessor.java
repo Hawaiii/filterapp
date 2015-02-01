@@ -34,21 +34,22 @@ public class ImgProcessor {
      * @return
      */
     public static Filter makefilter(Bitmap img){
-//      Log.v("ImgProc", "Start making a filter.");
-        // Resize image if too large
-        if (img.getWidth() > 256 || img.getHeight() > 256)
-            img = Bitmap.createScaledBitmap(img, 128, 128, true);
-        
-        // Compute the mean & sigma for img l*a*b* space and make filter
-        double[][] ms = meanAndStd(bitmap2lab(img));
-        if (ms == null){
-            Log.v("ImgProc", "Failed to compute mean and std!");
-            return null;
-        }
-        Filter nfilter = new Filter(ms[0], ms[1]);
-//      Log.v("ImgProc", "Done making a filter.");
-    
-        return nfilter;
+    	
+    	return Filter.dummyFilter();
+    	
+//        // Resize image if too large
+//        if (img.getWidth() > 256 || img.getHeight() > 256)
+//            img = Bitmap.createScaledBitmap(img, 128, 128, true);
+//        
+//        // Compute the mean & sigma for img l*a*b* space and make filter
+//        double[][] ms = meanAndStd(bitmap2lab(img));
+//        if (ms == null){
+//            Log.v("ImgProc", "Failed to compute mean and std!");
+//            return null;
+//        }
+//        Filter nfilter = new Filter(ms[0], ms[1]);
+//    
+//        return nfilter;
     }
     
 //  /**
@@ -84,6 +85,10 @@ public class ImgProcessor {
 //        return target;
       if (target == null || target.getWidth() == 0 || target.getHeight() == 0
               || filter == null ){
+    	  if (target == null) Log.v("ImgProc", "target null");
+    	  if (target.getWidth() == 0) Log.v("ImgProc", "width 0");
+    	  if (target.getHeight() == 0) Log.v("ImgProc", "height 0");
+    	  if (filter == null) Log.v("ImgProc", "filter null");
           Log.v("ImgProc", "Can't apply filter because image dimensions are wrong.");
           return null;
       }

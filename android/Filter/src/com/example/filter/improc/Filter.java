@@ -12,9 +12,9 @@ public class Filter implements Serializable {
     private double[] means = new double[3]; // in the order of lab
     private double[] stds = new double[3]; // in the order of lab
     
+    
     protected Filter(double[] means, double[] stds){
-        this.means = means;
-        this.stds = stds;
+        this(means[0], stds[0], means[1], stds[1], means[2], stds[2]);
     }
     
     protected Filter(double lmean, double lstd, 
@@ -28,6 +28,11 @@ public class Filter implements Serializable {
         stds[1] = astd;
         stds[2] = bstd;
     }
+
+    public static Filter dummyFilter(){
+    	return new Filter(2.878,1.556, 0.2784,0.2687, 0.0158,0.0414); 
+    }
+
     
     protected double mean(int chnl){
         if (chnl < 0 || chnl > 2){

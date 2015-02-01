@@ -169,6 +169,7 @@ public class Upload_b extends Activity {
           		
           		@Override
           		public void onClick(View v) {
+          			Log.v("v", "map size:"+map.size());
           			String path = testArray.get(idx);
           			Filter f = map.get(path);
           			BitmapFactory.Options options = new BitmapFactory.Options();
