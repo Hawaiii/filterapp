@@ -80,7 +80,7 @@ public class Upload_a extends Activity {
     		 //TODO huayi's todo not my todo
     		Filter f = p.makefilter(bitmap);
 //    		Filter f = null;
-    		saveImage(bitmap);
+    		String image_path = saveImage(bitmap);
     		
     		
             // Get the Object
@@ -91,11 +91,12 @@ public class Upload_a extends Activity {
             	map = new HashMap<String, Filter>();
             } 
             
-            if (!map.isEmpty()) {
-            	map.put(Integer.toString(+1), f);
-            } else {
-            	map.put("1", f);
-            }
+//            if (!map.isEmpty()) {
+//            	map.put(Integer.toString(+1), f);
+//            } else {
+//            	map.put("1", f);
+//            }
+            map.put(image_path, f);
             saveObject(map);
     		 
          	Intent i=new Intent(
@@ -132,7 +133,7 @@ public class Upload_a extends Activity {
         }
     }
  
-    private void saveImage(Bitmap finalBitmap) {
+    private String saveImage(Bitmap finalBitmap) {
 	    String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
 	    System.out.println(root +" Root value in saveImage Function");
 	    File myDir = new File(root + "/peel");
@@ -174,6 +175,7 @@ public class Upload_a extends Activity {
 //	    File[] files = myDir.listFiles();
 //    	int numberOfImages = files.length;
 //    	System.out.println("Total images in Folder "+numberOfImages);
+	    return Image_path;
 	}
     
     public void saveObject(HashMap<String, Filter> map){
