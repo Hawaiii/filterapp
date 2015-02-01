@@ -35,45 +35,22 @@ public class ImgProcessor {
      */
     public static Filter makefilter(Bitmap img){
     	
-    	return Filter.dummyFilter();
+//    	return Filter.dummyFilter();
     	
-//        // Resize image if too large
-//        if (img.getWidth() > 256 || img.getHeight() > 256)
-//            img = Bitmap.createScaledBitmap(img, 128, 128, true);
-//        
-//        // Compute the mean & sigma for img l*a*b* space and make filter
-//        double[][] ms = meanAndStd(bitmap2lab(img));
-//        if (ms == null){
-//            Log.v("ImgProc", "Failed to compute mean and std!");
-//            return null;
-//        }
-//        Filter nfilter = new Filter(ms[0], ms[1]);
-//    
-//        return nfilter;
+        // Resize image if too large
+        if (img.getWidth() > 128 || img.getHeight() > 128)
+            img = Bitmap.createScaledBitmap(img, 128, 128, true);
+        
+        // Compute the mean & sigma for img l*a*b* space and make filter
+        double[][] ms = meanAndStd(bitmap2lab(img));
+        if (ms == null){
+            Log.v("ImgProc", "Failed to compute mean and std!");
+            return null;
+        }
+        Filter nfilter = new Filter(ms[0], ms[1]);
+    
+        return nfilter;
     }
-    
-//  /**
-//   * Saves given filter into hashmap with given key
-//   * @param key
-//   * @param f
-//   */
-//  public void saveFilter(String key, Filter f){
-//      savedFilters.put(key, f);
-//  }
-    
-//  /**
-//   * Loads a filter for later processing
-//   * @param filKey
-//   */
-//  public void loadFilter(String filKey){
-//      Filter f = savedFilters.get(filKey);
-//      if (f == null){
-//          Log.v("ImgProc", "Filter "+filKey+" not found");
-//          //TODO app display error message
-//          return;
-//      }
-//      this.forProcessing = f; 
-//  }
     
     /**
      * Applies given filter on given input target image, return filtered result
@@ -94,7 +71,7 @@ public class ImgProcessor {
       }
       // Resize image if too big
       if (target.getWidth() > 640 || target.getHeight() > 480)
-          target = Bitmap.createScaledBitmap(target, (int)target.getWidth()/4, (int)target.getHeight()/4, true);
+          target = Bitmap.createScaledBitmap(target, (int)target.getWidth()/8, (int)target.getHeight()/8, true);
       
       double[][] tgtLab = bitmap2lab(target);
       double[][] tgtMs = meanAndStd(tgtLab);
@@ -156,6 +133,7 @@ public class ImgProcessor {
             result[1][z] /= lab[z].length;
             result[1][z] = Math.sqrt(result[1][z]);
         }
+        Log.v("ImgProc", "mean and std: "+result[0][0]+","+result[0][1]+","+result[0][2]+","+result[1][0]+","+result[1][1]+","+result[1][2]);
         
         return result;
     }
@@ -246,8 +224,12 @@ public class ImgProcessor {
         int len = lms[0].length;
         
         for (int c = 0; c < 3; ++c){
-            for (int x = 0; x < len; ++x){  
-                lms[c][x] = Math.log10(lms[c][x])+0.0001;
+            for (int x = 0; x < len; ++x){ 
+            	if (Double.isNaN( Math.log10(lms[c][x]+0.0001)) ){
+                	Log.v("log lms", "lms origin"+lms[c][x]);
+                }
+                lms[c][x] = Math.log10(lms[c][x]+0.1);
+                
             }
         }
         return lms;
@@ -270,7 +252,16 @@ public class ImgProcessor {
     }
     
     private static double[][] lms2lab(double[][] llms){
-        return matrixMultiply(AB, llms);
+    	return matrixMultiply(AB, llms);
+//        double[][] temp = matrixMultiply(AB, llms);
+//        for (int i = 0; i < 3; i++){
+//        	for (int j = 0; j < temp[0].length; j++){
+//        		if ( Double.isNaN(temp[i][j])){
+//        			Log.v("lms2lab result", "i"+i+"j"+j+"llms[i][j]"+llms[i][j]);
+//        		}
+//        	}
+//        }
+//        return temp;
     }
     
     private static double[][] lab2llms(double [][] lab){
