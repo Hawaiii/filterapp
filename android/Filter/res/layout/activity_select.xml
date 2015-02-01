@@ -37,15 +37,6 @@
         android:layout_alignParentRight="true"
         android:text="yes" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher" />
-
     <Button
         android:id="@+id/no"
         android:layout_width="wrap_content"
@@ -53,5 +44,15 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/textView1"
         android:text="no" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_above="@+id/yes"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>

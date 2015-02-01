@@ -182,6 +182,8 @@ public class Upload_b extends Activity {
           			Bitmap filtered = ImgProcessor.applyFilter(bitmap, f);
           			imgFavorite.setImageBitmap(filtered);
           			finalimg = filtered;
+          			bitmap = null;
+          			System.gc();
           		}
           	};
           	
@@ -213,6 +215,9 @@ public class Upload_b extends Activity {
             imageItems.add(imageItem);
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
+            
+            bitmap = null;
+            System.gc();
             
         }
     }
