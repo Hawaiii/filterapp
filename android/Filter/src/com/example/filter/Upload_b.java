@@ -61,6 +61,7 @@ public class Upload_b extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_select);
         
         btnYes = (Button) findViewById(R.id.yes);
@@ -77,7 +78,7 @@ public class Upload_b extends Activity {
 
         // Get reference to carousel container
         mCarouselContainer = (LinearLayout) findViewById(R.id.carousel);
-        
+        refresh();
         
     }
     
@@ -132,21 +133,16 @@ public class Upload_b extends Activity {
     }
  
     
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
+    
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+    protected void refresh(){
         // Compute the width of a carousel item based on the screen width and number of initial items.
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int imageWidth = (int) (displayMetrics.widthPixels / INITIAL_ITEMS_COUNT);
         
-        Bitmap a = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_01);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_02);
-        Bitmap c = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_03);
-        Bitmap d = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_04);
-        Bitmap e = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_05);
-        Bitmap f = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_06);
+      
         
         final HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
         // Get the array of puppy resources
@@ -174,14 +170,18 @@ public class Upload_b extends Activity {
           		
           		@Override
           		public void onClick(View v) {
+          			Log.v("v", "map size:"+map.size());
           			String path = testArray.get(idx);
           			Filter f = map.get(path);
+          			Log.v("lalala", (f==null)?"null":f.toString());
           			BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+                    Bitmap bitmap1 = BitmapFactory.decodeFile(path, options);
           			Bitmap filtered = ImgProcessor.applyFilter(bitmap, f);
           			imgFavorite.setImageBitmap(filtered);
           			finalimg = filtered;
+          			bitmap1 = null;
+          			System.gc();
           		}
           	};
           	
@@ -201,9 +201,9 @@ public class Upload_b extends Activity {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(testArray.get(i), options);
+            Bitmap bitmap1 = BitmapFactory.decodeFile(testArray.get(i), options);
            
-            imageItem.setImageBitmap(bitmap);
+            imageItem.setImageBitmap(bitmap1);
             
             // Set the size of the image view to the previously computed value
             imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
@@ -213,6 +213,9 @@ public class Upload_b extends Activity {
             imageItems.add(imageItem);
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
+            
+            bitmap1 = null;
+            System.gc();
             
         }
     }

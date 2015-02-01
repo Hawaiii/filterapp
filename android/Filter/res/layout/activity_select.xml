@@ -30,19 +30,19 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/ic_launcher" />
 
-    <ImageButton
+    <Button
         android:id="@+id/yes"
-        android:layout_width="70dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="yes" />
+
+    <Button
+        android:id="@+id/no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@color/legit_gray"
@@ -56,5 +56,15 @@
         android:layout_toRightOf="@+id/textView1"
         android:background="@color/legit_gray"
         android:src="@drawable/cross_btn" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_above="@+id/yes"
+        android:layout_alignParentLeft="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher" />
 
 </RelativeLayout>
