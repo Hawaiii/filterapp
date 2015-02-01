@@ -12,9 +12,9 @@ rgbSpace = [Rr;Gr;Br];
 M_target = M*rgbSpace;
 L_target = L*M_target;
 
-L = log10(L_target(1,:)+0.0001);
-M = log10(L_target(2,:)+0.0001);
-S = log10(L_target(3,:)+0.0001);
+L = log10(abs(L_target(1,:)+0.0001));
+M = log10(abs(L_target(2,:)+0.0001));
+S = log10(abs(L_target(3,:)+0.0001));
 log_target = [L;M;S];
 
 lap_target = A*Bm*log_target;

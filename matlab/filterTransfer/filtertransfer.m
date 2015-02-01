@@ -1,8 +1,8 @@
 clear all
 clc
 close all
-source = im2double(imread('source/scenery.jpg'));
-target = im2double(imread('target/building2.jpg'));
+source = im2double(imread('source/rainbow.png'))*255;
+target = im2double(imread('target/flower.jpg'))*255;
 source = imresize(source,0.1);
 % target = imresize(target,0.1);
 [row,col,~] = size(target);
@@ -34,6 +34,8 @@ b_scale = b_scale + output_source(1,3);
 
 lap_out = [l_scale;a_scale;b_scale];
 
+output_lapout = stat(lap_out)
+
 % debug = merge(10.^lap_out,row,col);
 % figure()
 % imshow(debug)
@@ -48,8 +50,8 @@ RGB_result = merge(RGB_target,row,col);
 
 %%
 figure()
-imshow(RGB_result);
+imshow(RGB_result/255);
 figure()
-imshow(source);
+imshow(source/255);
 figure()
-imshow(target)
+imshow(target/255)

@@ -174,7 +174,7 @@ public class Upload_b extends Activity {
           			Log.v("v", "map size:"+map.size());
           			String path = testArray.get(idx);
           			Filter f = map.get(path);
-          			Log.v("lalala", (f==null)?"null":f.toString());
+//          			Log.v("lalala", (f==null)?"null":f.toString());
           			BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                     Bitmap bitmap1 = BitmapFactory.decodeFile(path, options);
@@ -193,6 +193,7 @@ public class Upload_b extends Activity {
         
         ImageView imageItem;
         
+        Log.v("test array size", testArray.size()+"");
         for (int i = 0 ; i < testArray.size() ; ++i) {
             // Create new ImageView
             imageItem = new ImageView(this);

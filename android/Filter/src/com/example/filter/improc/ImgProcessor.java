@@ -12,17 +12,22 @@ public class ImgProcessor {
 //  private HashMap<String, Filter> savedFilters;
 //  private Filter forProcessing; //load好的filter就是读到这里
 
-    private static double[][] LM = new double[][]{{0.125913, 0.737518, 0.134969},
-        {-0.0507025, 0.975769, 0.0743339}, {-0.0188277, 0.161926, 0.0848201}};
-    private static double[][] LMinv = {{4.46794,-3.58732,0.119314},
-        {-1.21858, 2.3809, -0.162388},
-        {0.0496975, -0.243866, 1.20448}};
-    private static double[][] AB = new double[][]{{0.5774,0.5774,0.5774},
-        {0.4082,0.4082,-0.8165},
-        {0.7071,-0.7071,0}};
-    private static double[][] ABinv = new double[][]{{1/Math.sqrt(3),0,0},
-        {0,1/Math.sqrt(6),0},
-        {0,0,0}};
+//  private static double[][] LM = new double[][]{{0.125913, 0.737518, 0.134969},
+//  {-0.0507025, 0.975769, 0.0743339}, {-0.0188277, 0.161926, 0.0848201}};
+private static double[][] LM = new double[][]{{0.3811,0.5783,0.0402},
+{0.1967,0.7244,0.0782},{0.0241,0.1228,0.8444}};
+private static double[][] LMinv = {{4.46794,-3.58732,0.119314},
+  {-1.21858, 2.3809, -0.162388},
+  {0.0496975, -0.243866, 1.20448}};
+private static double[][] AB = new double[][]{{0.5774,0.5774,0.5774},
+  {0.4082,0.4082,-0.8165},
+  {0.7071,-0.7071,0}};
+//private static double[][] BAinv = new double[][]{{1/Math.sqrt(3),0,0},
+//  {0,1/Math.sqrt(6),0},
+//  {0,0,0}};
+
+private static double[][] ABinv = new double[][]{{0.5774,0.4082,0.7071},
+{0.5774,0.4082,-0.7071},{0.5774,-0.8165,0}}; // binv * ainv as matlab
     
 //  public ImgProcessor(){
 //      savedFilters = new HashMap<String, Filter>();
@@ -62,10 +67,10 @@ public class ImgProcessor {
 //        return target;
       if (target == null || target.getWidth() == 0 || target.getHeight() == 0
               || filter == null ){
-    	  if (target == null) Log.v("ImgProc", "target null");
-    	  if (target.getWidth() == 0) Log.v("ImgProc", "width 0");
-    	  if (target.getHeight() == 0) Log.v("ImgProc", "height 0");
-    	  if (filter == null) Log.v("ImgProc", "filter null");
+//    	  if (target == null) Log.v("ImgProc", "target null");
+//    	  if (target.getWidth() == 0) Log.v("ImgProc", "width 0");
+//    	  if (target.getHeight() == 0) Log.v("ImgProc", "height 0");
+//    	  if (filter == null) Log.v("ImgProc", "filter null");
           Log.v("ImgProc", "Can't apply filter because image dimensions are wrong.");
           return null;
       }
@@ -162,8 +167,16 @@ public class ImgProcessor {
                 pixel = tgt.getPixel(x, y);
                 A = Color.alpha(pixel);
                 R = (int)rgb[0][x+width*y];
+                R = (R<0)?0:R;
+                R = (R>255)?255:R;
+                
                 G = (int)rgb[1][x+width*y];
+                G = (G<0)?0:G;
+                G = (G>255)?255:G;
+                
                 B = (int)rgb[2][x+width*y];
+                B = (B<0)?0:B;
+                B = (B>255)?255:B;
                 ntgt.setPixel(x, y, Color.argb(A, R, G, B));
             }
         }
@@ -225,10 +238,10 @@ public class ImgProcessor {
         
         for (int c = 0; c < 3; ++c){
             for (int x = 0; x < len; ++x){ 
-            	if (Double.isNaN( Math.log10(lms[c][x]+0.0001)) ){
+            	if (Double.isNaN( Math.log10(Math.abs(lms[c][x])+0.1)) ){
                 	Log.v("log lms", "lms origin"+lms[c][x]);
                 }
-                lms[c][x] = Math.log10(lms[c][x]+0.1);
+                lms[c][x] = Math.log10(Math.abs(lms[c][x])+0.1);
                 
             }
         }
@@ -245,7 +258,7 @@ public class ImgProcessor {
 
         for (int c = 0; c < 3; ++c){
             for (int x = 0; x < len; ++x){
-                llms[c][x] = Math.pow(llms[c][x],10);
+            	llms[c][x] = Math.pow(10,llms[c][x]);
             }
         }
         return llms;
