@@ -9,23 +9,41 @@
    android:paddingTop="@dimen/activity_vertical_margin"
    tools:context=".MainActivity">
 
-   <ImageView
+   <!-- <ImageView
        android:id="@+id/imageView1"
        android:layout_width="match_parent"
        android:layout_height="400dp"
        android:layout_alignParentTop="true"
        android:contentDescription="@string/hello_world"
        android:scaleType="fitXY"
-       android:src="@drawable/ic_launcher" />
-
+       android:src="@drawable/ic_launcher" />-->
+   
    <Button
-       android:id="@+id/yes"
+       android:id="@+id/camera"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignParentBottom="true"
        android:layout_centerHorizontal="true"
        android:layout_marginBottom="5dp"
        android:gravity="center"
-       android:text="Add to the Gallery" />
+       android:text="try from camera" /> 
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Added to the gallery!" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:text="try from gallery" />
 
 </RelativeLayout>
