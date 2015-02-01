@@ -17,7 +17,6 @@ public class MainActivity extends Activity {
 	 ImageButton btnMake;
 //	 Button btnCarousel;
 
-    @SuppressLint("NewApi") @Override
     protected void onCreate(Bundle savedInstanceState) {
 //    	getActionBar().hide();
 //    	Log.d("d","0");
@@ -39,17 +38,7 @@ public class MainActivity extends Activity {
     
     }
     
-    OnClickListener carousel = new OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-         	Intent i=new Intent(
-                    MainActivity.this,
-                    Carousel.class);
-           startActivity(i);
-			
-		}
-	};
+   
     
     OnClickListener open_camera = new OnClickListener() {
         @Override
@@ -67,7 +56,6 @@ public class MainActivity extends Activity {
          	Intent i=new Intent(
                      MainActivity.this,
                      Upload_b.class);
-         	i.putExtra("isFilterPhoto", false);
             startActivity(i);
          }
       };

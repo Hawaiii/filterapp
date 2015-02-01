@@ -69,12 +69,13 @@ public class Camera extends Activity {
         btnNo.setOnClickListener(back);
         
         //open the gallery
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         imgFavorite = (ImageView)findViewById(R.id.imageView1);
-
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
         // Get reference to carousel container
         mCarouselContainer = (LinearLayout) findViewById(R.id.carousel);
         
@@ -106,29 +107,40 @@ public class Camera extends Activity {
     
     
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-        case PICK_IMAGE:
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        
+//    	
+      @Override
+      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+          // TODO Auto-generated method stub
+          super.onActivityResult(requestCode, resultCode, data);
+//    	switch (requestCode) {
+//        case PICK_IMAGE:
             if (resultCode == Activity.RESULT_OK) {
                 Uri selectedImageUri = data.getData();
                 String filePath = null;
+                
+                bitmap = (Bitmap) data.getExtras().get("data");
+				imgFavorite.setImageBitmap(bitmap);
+				Log.v("v","already set the img");
                                
-				try {
-					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-					imgFavorite.setImageBitmap(bitmap);
-					Log.v("v","already set the img");
-				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+//				try {
+////					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
+//					bitmap = (Bitmap) data.getExtras().get("data");
+//					imgFavorite.setImageBitmap(bitmap);
+//					Log.v("v","already set the img");
+//				} catch (FileNotFoundException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
             }
-            break;
-        default:
-        }
+//            break;
+//        default:
+//        }
     }
  
     
