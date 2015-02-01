@@ -13,10 +13,19 @@ public class ImgProcessor {
 	private HashMap<String, Filter> savedFilters;
 	private Filter forProcessing; //load好的filter就是读到这里
 	
+	private static double[][] M = new double[][]{{0.5141, 0.3239, 0.1604},
+			{0.2651,0.6702,0.0641},
+			{0.0241,0.1228,0.8444}};
+	
 	public ImgProcessor(){
 		savedFilters = new HashMap<String, Filter>();
 	}
 
+	/**
+	 * Makes a new filter from given image
+	 * @param img
+	 * @return
+	 */
 	public Filter makefilter(Bitmap img){
 		// Compute the mean & sigma for img l*a*b* space and make filter
 		double[][] ms = meanAndStd(rgb2lab(img));
@@ -25,21 +34,39 @@ public class ImgProcessor {
 			return null;
 		}
 		Filter nfilter = new Filter(ms[0], ms[1]);
-		
-		// Save it if successfully made
-		if (nfilter == null){
-			System.out.println("Failed to make a filter.");
-			return null;
-		}
-		// Save img to specific path TODO;
-		// Ask user to input filter name TODO
-		// Save (img path/filter name, filter) to hashmap TODO 
-		
+	
 		return nfilter;
 	}
-	public void loadFilter(String filKey){
-		//TODO
+	
+	/**
+	 * Saves given filter into hashmap with given key
+	 * @param key
+	 * @param f
+	 */
+	public void saveFilter(String key, Filter f){
+		savedFilters.put(key, f);
 	}
+	
+	/**
+	 * Loads a filter for later processing
+	 * @param filKey
+	 */
+	public void loadFilter(String filKey){
+		Filter f = savedFilters.get(filKey);
+		if (f == null){
+			System.out.println("Filter "+filKey+" not found");
+			//TODO app display error message
+			return;
+		}
+		this.forProcessing = f; 
+	}
+	
+	/**
+	 * Applies given filter on given input target image, return filtered result
+	 * @param target
+	 * @param filter
+	 * @return
+	 */
 	public Bitmap applyFilter(Bitmap target, Filter filter){
 		if (target == null || target.getWidth() == 0 || target.getHeight() == 0
 				|| filter == null ){
@@ -68,7 +95,7 @@ public class ImgProcessor {
 		}
 		
 		// merge stuff back to rgb
-		return lab2rgb(tgtLab);
+		return lab2rgb(tgtLab, target);
 	}
 	
 	/**
@@ -119,14 +146,35 @@ public class ImgProcessor {
 		return result;
 	}
 	
+	
 	/**
 	 * Methods for converting color spaces.
 	 * @param img
 	 * @return
 	 */
-	private Bitmap lab2rgb(double[][][] lab){
-		//TODO
-		return null;
+	// writes the rgb directly into the given bitmap
+	private Bitmap lab2rgb(double[][][] lab, Bitmap tgt){
+		double[][][] rgb = lms2rgb(loglms2lms(lab2llms(lab)));
+		
+		//TODO check dimensions
+		
+		int width = tgt.getWidth();
+		int height = tgt.getHeight();
+		
+		int pixel, A, R, G, B;
+		
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++){
+				pixel = tgt.getPixel(x, y);
+				A = Color.alpha(pixel);
+				R = (int)rgb[x][y][0];
+				G = (int)rgb[x][y][1];
+				B = (int)rgb[x][y][2];
+				tgt.setPixel(x, y, Color.argb(A, R, G, B));
+			}
+		}
+		return tgt;
+		
 	}
 	
 	private double[][][] rgb2lab(Bitmap img){
@@ -137,10 +185,6 @@ public class ImgProcessor {
 		
 		int R, G, B;
 		int pixel;
-		
-		double[][] M = new double[][]{{0.5141, 0.3239, 0.1604},
-			{0.2651,0.6702,0.0641},
-			{0.0241,0.1228,0.8444}};
 		
 		// get image size
 	    int width = img.getWidth();
@@ -168,28 +212,34 @@ public class ImgProcessor {
 	}
 	
 	private double[][][] xyz2lms(double[][][]xyz){
-		if (xyz == null || xyz[0] == null || 
-				xyz[0][0] == null || xyz[0][0].length != 3){
-			System.out.println("bad dimensions for xyz2lms!");
-			return null;
-		}
-		
+//		if (xyz == null || xyz[0] == null || 
+//				xyz[0][0] == null || xyz[0][0].length != 3){
+//			System.out.println("bad dimensions for xyz2lms!");
+//			return null;
+//		}		
 		double[][] L = new double[][]{{0.3897,0.6890,-0.0787},
 				{-0.2298,1.1834,0.0464},
 				{0.0000,0.0000,1.0000}};
-		
-		int width = xyz.length;
-		int height = xyz[0].length;
-		double[][][]lms = new double[width][height][3];
-		for (int x = 0; x < width; ++x){
-			for (int y = 0; y < height; ++y){
-				lms[x][y][0] = L[0][0]*xyz[x][y][0] + L[0][1]*xyz[x][y][1] + L[0][2]*xyz[x][y][2];
-				lms[x][y][1] = L[1][0]*xyz[x][y][0] + L[1][1]*xyz[x][y][1] + L[1][2]*xyz[x][y][2];
-				lms[x][y][2] = L[2][0]*xyz[x][y][0] + L[2][1]*xyz[x][y][1] + L[2][2]*xyz[x][y][2];
-			}
-		}
-		xyz = null; // releases the original array?
-		return lms;
+
+//		int width = xyz.length;
+//		int height = xyz[0].length;
+//		double[][][]lms = new double[width][height][3];
+//		for (int x = 0; x < width; ++x){
+//			for (int y = 0; y < height; ++y){
+//				lms[x][y][0] = L[0][0]*xyz[x][y][0] + L[0][1]*xyz[x][y][1] + L[0][2]*xyz[x][y][2];
+//				lms[x][y][1] = L[1][0]*xyz[x][y][0] + L[1][1]*xyz[x][y][1] + L[1][2]*xyz[x][y][2];
+//				lms[x][y][2] = L[2][0]*xyz[x][y][0] + L[2][1]*xyz[x][y][1] + L[2][2]*xyz[x][y][2];
+//			}
+//		}
+//		xyz = null; // releases the original array?
+		return matrixMultiply(L, xyz);
+	}
+	
+	private double[][][] lms2rgb(double[][][] lms){
+		double[][] LMinv = {{4.46794,-3.58732,0.119314},
+				{-1.21858, 2.3809, -0.162388},
+				{0.0496975, -0.243866, 1.20448}};
+		return matrixMultiply(LMinv, lms);
 	}
 	
 	private double[][][] lms2loglms(double[][][]lms){
@@ -212,30 +262,75 @@ public class ImgProcessor {
 		return lms;
 	}
 	
-	private double[][][] lms2lab(double[][][] llms){
+	private double[][][] loglms2lms(double[][][]llms){
 		if (llms == null || llms[0] == null || 
 				llms[0][0] == null || llms[0][0].length != 3){
-			System.out.println("bad dimensions for lms2lab!");
+			System.out.println("bad dimensions for lms2loglms!");
 			return null;
 		}
+		
+		int width = llms.length;
+		int height = llms[0].length;
+		
+		for (int x = 0; x < width; ++x){
+			for (int y = 0; y < height; ++y){
+				for (int c = 0; c < 3; ++c){
+					llms[x][y][c] = Math.pow(llms[x][y][c],10);
+				}
+			}
+		}
+		return llms;
+	}
+	
+	private double[][][] lms2lab(double[][][] llms){
 		
 		double[][] AB = new double[][]{{0.5774,0.5774,0.5774},
 				{0.4082,0.4082,-0.8165},
 				{0.7071,-0.7071,0}};
 		
-		int width = llms.length;
-		int height = llms[0].length;
+//		int width = llms.length;
+//		int height = llms[0].length;
+//		
+//		double[][][]lab = new double[width][height][3];
+//		for (int x = 0; x < width; ++x){
+//			for (int y = 0; y < height; ++y){
+//				lab[x][y][0] = AB[0][0]*llms[x][y][0] + AB[0][1]*llms[x][y][1] + AB[0][2]*llms[x][y][2];
+//				lab[x][y][1] = AB[1][0]*llms[x][y][0] + AB[1][1]*llms[x][y][1] + AB[1][2]*llms[x][y][2];
+//				lab[x][y][2] = AB[2][0]*llms[x][y][0] + AB[2][1]*llms[x][y][1] + AB[2][2]*llms[x][y][2];
+//			}
+//		}
+//		llms = null; // release llms?
+		return matrixMultiply(AB, llms);
+	}
+	
+	private double[][][] lab2llms(double [][][] lab){
+		double[][] ABinv = new double[][]{{1/Math.sqrt(3),0,0},
+				{0,1/Math.sqrt(6),0},
+				{0,0,0}};
+		return matrixMultiply(ABinv, lab);
+	}
+	
+	// Matrix multiplication for 3*3 matrix times 3*n matrix
+	private double[][][] matrixMultiply(double[][] small, double[][][] big){
+		if (small == null || small.length != 3 || small[0] == null || small[0].length != 3 
+				|| big == null || big[0] == null || big[0][0] == null || big[0][0].length != 3){
+			System.out.println("bad dimensions for matrix multiply");
+			return null;
+		}
 		
-		double[][][]lab = new double[width][height][3];
+		int width = big.length;
+		int height = big[0].length;
+		
+		double[][][]res = new double[width][height][3];
 		for (int x = 0; x < width; ++x){
 			for (int y = 0; y < height; ++y){
-				lab[x][y][0] = AB[0][0]*llms[x][y][0] + AB[0][1]*llms[x][y][1] + AB[0][2]*llms[x][y][2];
-				lab[x][y][1] = AB[1][0]*llms[x][y][0] + AB[1][1]*llms[x][y][1] + AB[1][2]*llms[x][y][2];
-				lab[x][y][2] = AB[2][0]*llms[x][y][0] + AB[2][1]*llms[x][y][1] + AB[2][2]*llms[x][y][2];
+				res[x][y][0] = small[0][0]*big[x][y][0] + small[0][1]*big[x][y][1] + small[0][2]*big[x][y][2];
+				res[x][y][1] = small[1][0]*big[x][y][0] + small[1][1]*big[x][y][1] + small[1][2]*big[x][y][2];
+				res[x][y][2] = small[2][0]*big[x][y][0] + small[2][1]*big[x][y][1] + small[2][2]*big[x][y][2];
 			}
 		}
-		llms = null; // release llms?
-		return lab;
+		big = null; // release llms?
+		return res;
 	}
 
 }
