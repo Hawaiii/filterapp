@@ -2,14 +2,14 @@ package com.example.filter;
 
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,12 +57,16 @@ public class Carousel extends Activity {
         
         // Get the array of puppy resources
         ArrayList<Bitmap> testArray = new ArrayList<Bitmap>();
-        testArray.add(a);
-        testArray.add(b);
-        testArray.add(c);
-        testArray.add(d);
-        testArray.add(e);
-        testArray.add(f);
+//        testArray.add(a);
+//        testArray.add(b);
+//        testArray.add(c);
+//        testArray.add(d);
+//        testArray.add(e);
+//        testArray.add(f);
+        File dir = new File(Environment.getExternalStorageDirectory()+ "/Pictures/peel/");
+        File[] filelist = dir.listFiles();
+        for (File pic : filelist)
+        { // do your stuff here }
         	
         // Populate the carousel with items
         ImageView imageItem;
@@ -82,5 +86,6 @@ public class Carousel extends Activity {
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
         }
+    }
     }
 }

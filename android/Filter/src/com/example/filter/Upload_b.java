@@ -1,8 +1,15 @@
 package com.example.filter;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.example.filter.improc.Filter;
+import com.example.filter.improc.ImgProcessor;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,8 +17,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -70,11 +79,11 @@ public class Upload_b extends Activity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri selectedImageUri = data.getData();
                 String filePath = null;
-                
-                
+                               
 				try {
 					bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
 					imgFavorite.setImageBitmap(bitmap);
+					Log.v("v","already set the img");
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -105,17 +114,57 @@ public class Upload_b extends Activity {
         Bitmap e = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_05);
         Bitmap f = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_06);
         
+        final HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
         // Get the array of puppy resources
-        ArrayList<Bitmap> testArray = new ArrayList<Bitmap>();
-        testArray.add(a);
-        testArray.add(b);
-        testArray.add(c);
-        testArray.add(d);
-        testArray.add(e);
-        testArray.add(f);
+        final ArrayList<String> testArray = new ArrayList<String>();
+//        testArray.add(a);
+//        testArray.add(b);
+//        testArray.add(c);
+//        testArray.add(d);
+//        testArray.add(e);
+//        testArray.add(f);
+//        	
+        File dir = new File(Environment.getExternalStorageDirectory()+ "/Pictures/peel");
+        File[] filelist = dir.listFiles();
+        for (File pic : filelist) {
+//        	BitmapFactory.Options options = new BitmapFactory.Options();
+//        	options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//        	try {
+//				bitmap = BitmapFactory.decodeStream(new FileInputStream(pic), null, options);
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+        	testArray.add(pic.getAbsolutePath());
         	
+        }
+        	
+        ArrayList<OnClickListener> listeners = new ArrayList<OnClickListener>();
+        for (int i = 0; i < testArray.size(); ++i) {
+        	
+        	 final int idx = i;
+              
+             OnClickListener filter = new OnClickListener() {
+          		
+          		@Override
+          		public void onClick(View v) {
+          			String path = testArray.get(idx);
+          			Filter f = map.get(path);
+          			BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                    Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+          			Bitmap filtered = ImgProcessor.applyFilter(bitmap, f);
+          			imgFavorite.setImageBitmap(filtered);
+          		}
+          	};
+          	
+          	listeners.add(filter);
+        }
         // Populate the carousel with items
+        ArrayList<ImageView> imageItems = new ArrayList<ImageView>();
+        
         ImageView imageItem;
+        
         for (int i = 0 ; i < testArray.size() ; ++i) {
             // Create new ImageView
             imageItem = new ImageView(this);
@@ -123,15 +172,39 @@ public class Upload_b extends Activity {
             // Set the shadow background
             imageItem.setBackgroundResource(R.drawable.shadow);
 
-            // Set the image view resource
-            imageItem.setImageBitmap(testArray.get(i));
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(testArray.get(i), options);
+           
+            imageItem.setImageBitmap(bitmap);
             
             // Set the size of the image view to the previously computed value
             imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
+            
+            imageItem.setOnClickListener(listeners.get(i));
 
+            imageItems.add(imageItem);
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
+            
         }
+    }
+
+    
+    public Object loadSerializedObject(File f)
+    {
+        try
+        {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+            Object o = ois.readObject();
+            return o;
+        }
+        catch(Exception ex)
+        {
+        Log.v("Serialization Read Error : ",ex.getMessage());
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
