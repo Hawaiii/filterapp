@@ -26,6 +26,7 @@ public class Save extends Activity {
         btnHome = (Button) findViewById(R.id.home);
       
         btnHome.setOnClickListener(home);
+        btnHome.setText("quit");
     
     }
     
@@ -33,10 +34,11 @@ public class Save extends Activity {
 		
 		@Override
 		public void onClick(View v) {
-         	Intent i=new Intent(
-                    Save.this,
-                    MainActivity.class);
-           startActivity(i);
+//         	Intent i=new Intent(
+//                    Save.this,
+//                    MainActivity.class);
+//           startActivity(i);
+			System.exit(1);
 			
 		}
 	};

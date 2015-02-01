@@ -2,16 +2,11 @@ package com.example.filter;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-
-import com.example.filter.improc.Filter;
-import com.example.filter.improc.ImgProcessor;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,15 +16,18 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.example.filter.improc.Filter;
+import com.example.filter.improc.ImgProcessor;
 
 /**
  * Upload the picture to use the filter.
@@ -41,8 +39,8 @@ public class Camera extends Activity {
 	private static final int PICK_IMAGE = 1;
 	Button btnCamera;
 	Button btnUpload;
-	Button btnYes;
-	Button btnNo;
+	ImageButton btnYes;
+	ImageButton btnNo;
 	ImageView imgFavorite;
 	Bitmap bitmap;
 	boolean isFilterPhoto;
@@ -63,8 +61,8 @@ public class Camera extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select);
         
-        btnYes = (Button) findViewById(R.id.yes);
-        btnNo = (Button) findViewById(R.id.no);
+        btnYes = (ImageButton) findViewById(R.id.yes);
+        btnNo = (ImageButton) findViewById(R.id.no);
         btnYes.setOnClickListener(save);
         btnNo.setOnClickListener(back);
         
