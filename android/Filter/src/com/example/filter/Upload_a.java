@@ -101,7 +101,19 @@ public class Upload_a extends Activity {
 //            } else {
 //            	map.put("1", f);
 //            }
+            
+            double[] means = new double[3]; // in the order of lab
+            double[] stds = new double[3]; // in the order of lab
+            means[0] = 1;
+            means[1] = 2;
+            means[2] = 3;
+            stds[0] = 1;
+            stds[1] = 1;
+            stds[2] = 1;
+            
+//            f =  new Filter(means, stds);
             map.put(image_path, f);
+//            Log.v("lalalalal", f.toString());
             saveObject(map);
     		 
          	Intent i=new Intent(

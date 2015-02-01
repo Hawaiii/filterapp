@@ -12,7 +12,7 @@ public class Filter implements Serializable {
     private double[] means = new double[3]; // in the order of lab
     private double[] stds = new double[3]; // in the order of lab
     
-    protected Filter(double[] means, double[] stds){
+    public Filter(double[] means, double[] stds){
         this.means = means;
         this.stds = stds;
     }

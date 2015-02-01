@@ -61,6 +61,7 @@ public class Upload_b extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.activity_select);
         
         btnYes = (Button) findViewById(R.id.yes);
@@ -77,7 +78,7 @@ public class Upload_b extends Activity {
 
         // Get reference to carousel container
         mCarouselContainer = (LinearLayout) findViewById(R.id.carousel);
-        
+        refresh();
         
     }
     
@@ -132,10 +133,10 @@ public class Upload_b extends Activity {
     }
  
     
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
+    
+//    protected void onPostCreate(Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+    protected void refresh(){
         // Compute the width of a carousel item based on the screen width and number of initial items.
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -171,6 +172,7 @@ public class Upload_b extends Activity {
           		public void onClick(View v) {
           			String path = testArray.get(idx);
           			Filter f = map.get(path);
+          			Log.v("lalala", f.toString());
           			BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                     Bitmap bitmap1 = BitmapFactory.decodeFile(path, options);
