@@ -168,10 +168,7 @@ public class ImgProcessor {
 			return null;
 		}
 		Bitmap ntgt = tgt.copy(tgt.getConfig(), true);
-<<<<<<< HEAD
-=======
 
->>>>>>> 651dbef85fa944fc62c0f158b511ddc594886b36
 		int pixel, A, R, G, B;
 		
 		for (int x = 0; x < width; x++){
@@ -184,10 +181,9 @@ public class ImgProcessor {
 				ntgt.setPixel(x, y, Color.argb(A, R, G, B));
 			}
 		}
-<<<<<<< HEAD
-=======
+
 		tgt = null; // free target?
->>>>>>> 651dbef85fa944fc62c0f158b511ddc594886b36
+
 		return ntgt;
 		
 	}
