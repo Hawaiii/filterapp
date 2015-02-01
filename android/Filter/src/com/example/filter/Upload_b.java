@@ -141,12 +141,7 @@ public class Upload_b extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         final int imageWidth = (int) (displayMetrics.widthPixels / INITIAL_ITEMS_COUNT);
         
-        Bitmap a = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_01);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_02);
-        Bitmap c = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_03);
-        Bitmap d = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_04);
-        Bitmap e = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_05);
-        Bitmap f = BitmapFactory.decodeResource(getResources(), R.drawable.puppy_06);
+      
         
         final HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
         // Get the array of puppy resources
@@ -203,9 +198,9 @@ public class Upload_b extends Activity {
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(testArray.get(i), options);
+            Bitmap bitmap1 = BitmapFactory.decodeFile(testArray.get(i), options);
            
-            imageItem.setImageBitmap(bitmap);
+            imageItem.setImageBitmap(bitmap1);
             
             // Set the size of the image view to the previously computed value
             imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
@@ -216,7 +211,7 @@ public class Upload_b extends Activity {
             /// Add image view to the carousel container
             mCarouselContainer.addView(imageItem);
             
-            bitmap = null;
+            bitmap1 = null;
             System.gc();
             
         }
