@@ -8,7 +8,6 @@ import android.graphics.Color;
 /**
  * 
  * @author hawaii
- *
  */
 public class ImgProcessor {
 	private HashMap<String, Filter> savedFilters;
@@ -19,11 +18,21 @@ public class ImgProcessor {
 	}
 
 	public Filter makefilter(Bitmap img){
-		// compute the mean & sigma for img l*a*b* space
-		// and save it if successfully made
-		return null;
+		// Compute the mean & sigma for img l*a*b* space and make filter
+		Filter nfilter = labFilFromMeanAndStd(rgb2lab(img));
+		
+		// Save it if successfully made
+		if (nfilter == null){
+			System.out.println("Failed to make a filter.");
+			return null;
+		}
+		// Save img to specific path TODO
+		// Ask user to input filter name TODO
+		// Save (img path/filter name, filter) to hashmap TODO 
+		
+		return nfilter;
 	}
-	public void loadFilter(Bitmap goodImg){
+	public void loadFilter(String filKey){
 		//TODO
 	}
 	public Bitmap applyFilter(Bitmap toFilter, Filter filter){
@@ -34,7 +43,14 @@ public class ImgProcessor {
 	/**
 	 * Compute the mean and standard deviation for given 3D array
 	 */
-	private double[][] MeanAndStd(double[][][] lab){
+	private Filter labFilFromMeanAndStd(double[][][] lab){
+		
+		if (lab == null || lab.length == 0 || lab[0] == null || lab[0].length == 0
+				|| lab[0][0] == null || lab[0][0].length != 3){
+			System.out.println("mean and std calculation input dimension incorrect!");
+			return null;
+		}
+		
 		double[][] result = new double[2][3];
 		
 		// set all to zero
@@ -44,11 +60,32 @@ public class ImgProcessor {
 			}
 		}
 		
-		// calculate the mean
-//		for (int x = 0; x < )
-		//TODO
+		// Calculate the mean
+		for (int z = 0; z < 3; z++){
+			for (int x = 0; x < lab.length; x++){
+				for (int y = 0; y < lab[0].length; y++){
+					result[0][z] += lab[x][y][z];
+				}
+			}
+		}
+		for (int z = 0; z < 3; z++){
+			result[0][z] /= lab.length * lab[0].length;
+		}
 		
-		return result;
+		// Calculate the standard deviation
+		for (int z = 0; z < 3; z++){
+			for (int x = 0; x < lab.length; x++){
+				for (int y = 0; y < lab[0].length; y++){
+					result[1][z] += Math.pow( (lab[x][y][z]-result[0][z]),2);
+				}
+			}
+		}
+		for (int z = 0; z < 3; z++){
+			result[1][z] /= lab.length * lab[0].length;
+			result[1][z] = Math.sqrt(result[1][z]);
+		}
+		
+		return new LabFilter(result[0], result[1]);
 	}
 	
 	/**
@@ -161,7 +198,7 @@ public class ImgProcessor {
 				lab[x][y][2] = AB[2][0]*llms[x][y][0] + AB[2][1]*llms[x][y][1] + AB[2][2]*llms[x][y][2];
 			}
 		}
-		llms = null; //release llms?
+		llms = null; // release llms?
 		return lab;
 	}
 
