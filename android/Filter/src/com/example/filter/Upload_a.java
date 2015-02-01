@@ -1,9 +1,13 @@
 package com.example.filter;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.Random;
 
 import android.app.Activity;
@@ -21,6 +25,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.filter.improc.Filter;
+import com.example.filter.improc.ImgProcessor;
+
 public class Upload_a extends Activity {
 
 	private static final int PICK_IMAGE = 1;
@@ -31,6 +38,7 @@ public class Upload_a extends Activity {
 	ImageView imgFavorite;
 	Bitmap bitmap;
 	boolean isFilterPhoto;
+	ImgProcessor p = new ImgProcessor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +77,18 @@ public class Upload_a extends Activity {
     	
     	 @Override
          public void onClick(View v) {
-    		 //TODO save photo to album
+    		 //TODO huayi's todo not my todo
+//    		Filter f = p.makefilter(bitmap);
+    		Filter f = null;
     		saveImage(bitmap);
+    		
+    		
+            // Get the Object
+            @SuppressWarnings("unchecked")
+			HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
+    		
+            map.put(Integer.toString(map.size()+1), f);
+            saveObject(map);
     		 
          	Intent i=new Intent(
                      Upload_a.this,
@@ -150,7 +168,36 @@ public class Upload_a extends Activity {
 //    	System.out.println("Total images in Folder "+numberOfImages);
 	}
     
-   
+    public void saveObject(HashMap<String, Filter> map){
+        try
+        {
+           ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File("/sdcard/save_object.bin"))); //Select where you wish to save the file...
+           oos.writeObject(map); // write the class as an 'object'
+           oos.flush(); // flush the stream to insure all of the information was written to 'save_object.bin'
+           oos.close();// close the stream
+        }
+        catch(Exception ex)
+        {
+           Log.v("Serialization Save Error : ",ex.getMessage());
+           ex.printStackTrace();
+        }
+   }
+    
+   public Object loadSerializedObject(File f)
+   {
+       try
+       {
+           ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+           Object o = ois.readObject();
+           return o;
+       }
+       catch(Exception ex)
+       {
+       Log.v("Serialization Read Error : ",ex.getMessage());
+           ex.printStackTrace();
+       }
+       return null;
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
