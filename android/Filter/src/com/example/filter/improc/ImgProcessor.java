@@ -19,14 +19,19 @@ public class ImgProcessor {
 
 	public Filter makefilter(Bitmap img){
 		// Compute the mean & sigma for img l*a*b* space and make filter
-		Filter nfilter = labFilFromMeanAndStd(rgb2lab(img));
+		double[][] ms = meanAndStd(rgb2lab(img));
+		if (ms == null){
+			System.out.println("Failed to compute mean and std!");
+			return null;
+		}
+		Filter nfilter = new Filter(ms[0], ms[1]);
 		
 		// Save it if successfully made
 		if (nfilter == null){
 			System.out.println("Failed to make a filter.");
 			return null;
 		}
-		// Save img to specific path TODO
+		// Save img to specific path TODO;
 		// Ask user to input filter name TODO
 		// Save (img path/filter name, filter) to hashmap TODO 
 		
@@ -35,15 +40,41 @@ public class ImgProcessor {
 	public void loadFilter(String filKey){
 		//TODO
 	}
-	public Bitmap applyFilter(Bitmap toFilter, Filter filter){
-		//TODO
-		return null;
+	public Bitmap applyFilter(Bitmap target, Filter filter){
+		if (target == null || target.getWidth() == 0 || target.getHeight() == 0
+				|| filter == null ){
+			System.out.println("Can't apply filter because image dimensions are wrong.");
+			return null;
+		}
+		
+		double[][][] tgtLab = rgb2lab(target);
+		double[][] tgtMs = meanAndStd(tgtLab);
+		
+		if (tgtLab == null || tgtLab[0] == null || tgtLab[0][0] == null ||
+				tgtLab[0][0].length != 3 || tgtMs == null || tgtMs[0] == null ){
+			System.out.println("tgtLab and tgtMs dimensions are wrong!");
+		}
+		
+		int width = tgtLab.length;
+		int height = tgtLab[0].length;
+		
+		// Scale all pixels
+		for (int x = 0; x < width; x++){
+			for (int y = 0; y < height; y++){
+				for (int z = 0; z < 3; z++){
+					tgtLab[x][y][z] = (tgtLab[x][y][z] - tgtMs[0][z]) * filter.std(z) / tgtMs[1][z] + filter.mean(z);
+				}
+			}
+		}
+		
+		// merge stuff back to rgb
+		return lab2rgb(tgtLab);
 	}
 	
 	/**
 	 * Compute the mean and standard deviation for given 3D array
 	 */
-	private Filter labFilFromMeanAndStd(double[][][] lab){
+	private double[][] meanAndStd(double[][][] lab){
 		
 		if (lab == null || lab.length == 0 || lab[0] == null || lab[0].length == 0
 				|| lab[0][0] == null || lab[0][0].length != 3){
@@ -85,7 +116,7 @@ public class ImgProcessor {
 			result[1][z] = Math.sqrt(result[1][z]);
 		}
 		
-		return new LabFilter(result[0], result[1]);
+		return result;
 	}
 	
 	/**
@@ -93,6 +124,11 @@ public class ImgProcessor {
 	 * @param img
 	 * @return
 	 */
+	private Bitmap lab2rgb(double[][][] lab){
+		//TODO
+		return null;
+	}
+	
 	private double[][][] rgb2lab(Bitmap img){
 		return lms2lab(lms2loglms(xyz2lms(rgb2xyz(img))));
 	}
