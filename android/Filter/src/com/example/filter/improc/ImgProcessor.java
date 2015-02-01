@@ -166,7 +166,7 @@ public class ImgProcessor {
 			System.out.println("rgb dimensions incorrect for coverting to bitmap.");
 			return null;
 		}
-
+		Bitmap ntgt = tgt.copy(tgt.getConfig(), true);
 		int pixel, A, R, G, B;
 		
 		for (int x = 0; x < width; x++){
@@ -176,10 +176,10 @@ public class ImgProcessor {
 				R = (int)rgb[0][x+width*y];
 				G = (int)rgb[1][x+width*y];
 				B = (int)rgb[2][x+width*y];
-				tgt.setPixel(x, y, Color.argb(A, R, G, B));
+				ntgt.setPixel(x, y, Color.argb(A, R, G, B));
 			}
 		}
-		return tgt;
+		return ntgt;
 		
 	}
 	
