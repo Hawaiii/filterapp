@@ -78,8 +78,8 @@ public class Upload_a extends Activity {
     	 @Override
          public void onClick(View v) {
     		 //TODO huayi's todo not my todo
-//    		Filter f = p.makefilter(bitmap);
-    		Filter f = null;
+    		Filter f = p.makefilter(bitmap);
+//    		Filter f = null;
     		saveImage(bitmap);
     		
     		
@@ -87,7 +87,15 @@ public class Upload_a extends Activity {
             @SuppressWarnings("unchecked")
 			HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
     		
-            map.put(Integer.toString(map.size()+1), f);
+            if (map == null) {
+            	map = new HashMap<String, Filter>();
+            } 
+            
+            if (!map.isEmpty()) {
+            	map.put(Integer.toString(+1), f);
+            } else {
+            	map.put("1", f);
+            }
             saveObject(map);
     		 
          	Intent i=new Intent(
