@@ -25,7 +25,6 @@
        android:layout_height="400dp"
        android:layout_alignLeft="@+id/yes"
        android:layout_alignParentTop="true"
-       android:contentDescription="@string/hello_world"
        android:scaleType="fitXY"
        android:src="@drawable/ic_launcher" />
 

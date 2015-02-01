@@ -55,4 +55,14 @@
         android:height="10dp"
         android:text="Upload a Picture"
         android:width="10dp" />
+
+    <Button
+        android:id="@+id/carousel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/camera"
+        android:layout_alignRight="@+id/camera"
+        android:layout_marginBottom="68dp"
+        android:text="Carousel" />
+
 </RelativeLayout>

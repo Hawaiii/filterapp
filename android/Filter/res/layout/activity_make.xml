@@ -23,8 +23,9 @@
         android:id="@+id/upload"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+        android:layout_marginBottom="138dp"
         android:height="10dp"
         android:text="Upload a Picture"
         android:width="10dp" />
