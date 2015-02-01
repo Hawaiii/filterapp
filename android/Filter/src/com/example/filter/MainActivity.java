@@ -13,6 +13,7 @@ public class MainActivity extends Activity {
 	 Button btnCamera;
 	 Button btnUpload;
 	 Button btnMake;
+	 Button btnCarousel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,12 +23,27 @@ public class MainActivity extends Activity {
         btnCamera = (Button) findViewById(R.id.camera);
         btnUpload = (Button) findViewById(R.id.upload);
         btnMake = (Button) findViewById(R.id.make_filter);
+        btnCarousel = (Button) findViewById(R.id.carousel_btn);
         
+        
+        btnCarousel.setOnClickListener(carousel);
         btnCamera.setOnClickListener(open_camera);
         btnUpload.setOnClickListener(upload_photos);
         btnMake.setOnClickListener(make_filter);
     
     }
+    
+    OnClickListener carousel = new OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+         	Intent i=new Intent(
+                    MainActivity.this,
+                    Carousel.class);
+           startActivity(i);
+			
+		}
+	};
     
     OnClickListener open_camera = new OnClickListener() {
         @Override
@@ -59,7 +75,8 @@ public class MainActivity extends Activity {
                startActivity(i);
         }
       };
-
+      
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
