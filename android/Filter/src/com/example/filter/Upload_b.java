@@ -151,18 +151,18 @@ public class Upload_b extends Activity {
         final HashMap<String, Filter> map = (HashMap<String, Filter>)loadSerializedObject(new File("/sdcard/save_object.bin")); //get the serialized object from the sdcard and caste it into the Person class.
         // Get the array of puppy resources
         final ArrayList<String> testArray = new ArrayList<String>();
-//        testArray.add(a);
-//        testArray.add(b);
-//        testArray.add(c);
-//        testArray.add(d);
-//        testArray.add(e);
-//        testArray.add(f);
-//        	
+ 
         File dir = new File(Environment.getExternalStorageDirectory()+ "/Pictures/peel");
         File[] filelist = dir.listFiles();
         
+        int count = 0;
+        
         for (File pic : filelist) {
-        	testArray.add(pic.getAbsolutePath());       	
+        	if (count > 3) {
+        		break;
+        	}
+        	testArray.add(pic.getAbsolutePath());   
+        	count ++;
         }
         	
         ArrayList<OnClickListener> listeners = new ArrayList<OnClickListener>();
