@@ -1,6 +1,8 @@
 package com.example.filter.improc;
 
-public class Filter {
+import java.io.Serializable;
+
+public class Filter implements Serializable {
 	
 	private double[] means = new double[3]; // in the order of lab
 	private double[] stds = new double[3]; // in the order of lab
